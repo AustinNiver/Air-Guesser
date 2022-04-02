@@ -22,7 +22,7 @@ run_input = {
 run = client.actor("dtrungtin/airbnb-scraper").call(run_input=run_input)
 
 # Fetch and print actor results from the run's dataset (if there are any)
-with open("backend/data.txt","w") as fp:
+with open("Air_Guesser/backend/data.txt","w") as fp:
     temp=[]
     for item in client.dataset(run["defaultDatasetId"]).iterate_items():
         for key in item.keys():
