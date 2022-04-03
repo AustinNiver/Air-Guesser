@@ -51,7 +51,37 @@ https://www.airbnb.com/rooms/12964731,Top O' The Stairs,5,3,Gettysburg, Pennsylv
 https://www.airbnb.com/rooms/29099102,Edward Menchey House,5,2,Gettysburg, Pennsylvania, United States,Entire home,{'lat': 39.82622, 'lng': -77.23494},[],{'rate': {'amount': 100, 'amount_formatted': '$100', 'currency': 'USD', 'is_micros_accuracy': False}, 'rate_type': 'nightly', 'rate_with_service_fee': {'amount': 100, 'amount_formatted': '$100', 'currency': 'USD', 'is_micros_accuracy': False}}
 https://www.airbnb.com/rooms/29595917,The Ertter House,5,4,Gettysburg, Pennsylvania, United States,Entire townhouse,{'lat': 39.82761, 'lng': -77.23267},[],{'rate': {'amount': 133, 'amount_formatted': '$133', 'currency': 'USD', 'is_micros_accuracy': False}, 'rate_type': 'nightly', 'rate_with_service_fee': {'amount': 133, 'amount_formatted': '$133', 'currency': 'USD', 'is_micros_accuracy': False}}
 https://www.airbnb.com/rooms/6493327,Charming Apartment,5,2,Gettysburg, Pennsylvania, United States,Entire rental unit,{'lat': 39.82484, 'lng': -77.23198},[],{'rate': {'amount': 108, 'amount_formatted': '$108', 'currency': 'USD', 'is_micros_accuracy': False}, 'rate_type': 'nightly', 'rate_with_service_fee': {'amount': 108, 'amount_formatted': '$108', 'currency': 'USD', 'is_micros_accuracy': False}}
+from apify_client import ApifyClient
 
+# Initialize the ApifyClient with your API token
+client = ApifyClient("apify_api_XbiDecc14h8GJq9bjN8qTZZY0uG7Bj0qmP09")
+
+# Prepare the actor input
+run_input = {
+    "locationQuery": "Buffalo",
+    "maxListings": 4,
+    "maxReviews": 0,
+    "currency": "USD",
+    "proxyConfiguration": { "useApifyProxy": True },
+    "maxConcurrency": 50,
+    "limitPoints": 100,
+    "timeoutMs": 60000,
+}
+
+# Run the actor and wait for it to finish
+run = client.actor("dtrungtin/airbnb-scraper").call(run_input=run_input)
+
+# Fetch and print actor results from the run's dataset (if there are any)
+with open("backend/data.txt","w") as fp:
+    temp=[]
+    for item in client.dataset(run["defaultDatasetId"]).iterate_items():
+        for key in item.keys():
+            se = str(item.get(key,"")).encode("ascii", "ignore")
+            sd = se.decode()
+            fp.writelines(sd)
+            fp.write(",")
+
+        fp.write("\n")
 https://www.airbnb.com/rooms/54181005,Luxurious 2-bedroom apartment in heart of downtown,4,Indianapolis, Indiana, United States,Entire condo,{'lat': 39.77299, 'lng': -86.15802},[],{'rate': {'amount': 5500, 'amount_formatted': '$5,500', 'currency': 'USD', 'is_micros_accuracy': False}, 'rate_type': 'nightly', 'rate_with_service_fee': {'amount': 5500, 'amount_formatted': '$5,500', 'currency': 'USD', 'is_micros_accuracy': False}}
 https://www.airbnb.com/rooms/43116147,AN AFFORDABLE EVENT SPACE WITH A POOL,16,Indianapolis, Indiana, United States,Entire home,{'lat': 39.82144, 'lng': -86.15148},[],{'rate': {'amount': 5000, 'amount_formatted': '$5,000', 'currency': 'USD', 'is_micros_accuracy': False}, 'rate_type': 'nightly', 'rate_with_service_fee': {'amount': 5000, 'amount_formatted': '$5,000', 'currency': 'USD', 'is_micros_accuracy': False}}
 https://www.airbnb.com/rooms/12692604,The Kitley House,5,6,Indianapolis, Indiana, United States,Entire home,{'lat': 39.76922, 'lng': -86.05523},[],{'rate': {'amount': 7286, 'amount_formatted': '$7,286', 'currency': 'USD', 'is_micros_accuracy': False}, 'rate_type': 'nightly', 'rate_with_service_fee': {'amount': 7286, 'amount_formatted': '$7,286', 'currency': 'USD', 'is_micros_accuracy': False}}
