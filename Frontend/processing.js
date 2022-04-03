@@ -1,5 +1,28 @@
 "use strict"
 
+
+function ajaxGetRequest(path, callback){
+    let request = new XMLHttpRequest();
+    request.onreadystatechange = function(){
+        if (this.readyState === 4 && this.status === 200){
+            callback(this.response);
+        }
+    };
+    request.open("GET", path);
+    request.send();
+}
+
+function ajaxPostRequest(path, data, callback){
+    let request = new XMLHttpRequest();
+    request.onreadystatechange = function(){
+        if (this.readyState === 4 && this.status === 200){
+            callback(this.response);
+        }
+    };
+    request.open("POST", path);
+    request.send(data);
+}
+
 let imageList=[]
 let count = 0
 
@@ -30,5 +53,7 @@ function startingImage(response){
 
 function start(){
     count=0
+    console.log(imageList)
+    console.log(imageList[count])
     document.getElementById("pic").src=imageList[count];
 }
