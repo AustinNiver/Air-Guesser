@@ -1,6 +1,3 @@
-import bottle
-import json
-import classes
 from apify_client import ApifyClient
 
 # Initialize the ApifyClient with your API token
