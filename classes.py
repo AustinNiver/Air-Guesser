@@ -8,5 +8,4 @@ def getImages(site):
     soup = BeautifulSoup(response.text, 'html.parser')
     img_tags = soup.find_all(class_='_6tbg2q')
     urls = [img['src'] for img in img_tags]
-    print(urls)
     return urls
