@@ -139,7 +139,7 @@ function guess() {
     document.getElementById("Country").style.background = "Red";
     hearts=1
   }
-  if (State==data["state"]){
+  if (State==data["State"]){
     document.getElementById("State").style.background = "Green";
     points+=30
   }else{
